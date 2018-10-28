@@ -21,6 +21,14 @@ order by b.post_time DESC";
         $query = $this->db->query($sql);
         return $query->result();
         //获得数组形式
+    } public function get_blog_by_id($id){
+        $sql = "select *,
+(SELECT count(*) from t_comment t WHERE t.blog_id = b.blog_id) num
+from t_blog b,t_blog_catalog c WHERE b.catalog_id = c.catalog_id
+and b.user_id = $id
+order by b.post_time DESC";
+        $query = $this->db->query($sql);
+        return $query->result();
     }
     public function get_catalogdata(){
         $query = $this->db->get('t_blog_catalog');
